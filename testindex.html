@@ -1,0 +1,790 @@
+<!doctype html>
+<html lang="fr" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SARL EVOLT - Solutions Digitales Professionnelles</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="images/6.png" type="image/x-icon" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      :root {
+        --primary: #f4c300;
+        --primary-dark: #d4a900;
+        --black: #111111;
+        --dark-gray: #222222;
+        --gray: #666666;
+        --light-gray: #f0f0f0;
+        --light: #ffffff;
+        --gradient: linear-gradient(135deg, #f4c300 0%, #ffdd00 100%);
+        --shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        --bg-color: #ffffff;
+        --card-bg: var(--light);
+        --text-color: var(--black);
+        --section-bg: #fafafa;
+        --border-color: var(--light-gray);
+        --footer-border: var(--light-gray);
+        --cover-overlay: rgba(0, 0, 0, 0.3);
+      }
+
+      [data-theme="dark"] {
+        --primary: #ffd700;
+        --primary-dark: #ffc400;
+        --bg-color: #121212;
+        --card-bg: #1e1e1e;
+        --text-color: #e0e0e0;
+        --section-bg: #252525;
+        --border-color: #333333;
+        --footer-border: #333333;
+        --gray: #aaaaaa;
+        --light-gray: #333333;
+        --gradient: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+        --shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        --cover-overlay: rgba(0, 0, 0, 0.5);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        transition:
+          background-color 0.3s,
+          color 0.3s,
+          border-color 0.3s,
+          box-shadow 0.3s;
+      }
+
+      body {
+        font-family: "Cairo", sans-serif;
+        background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+        color: var(--text-color);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 20px;
+        line-height: 1.6;
+        background-color: var(--bg-color);
+        background-image: none;
+      }
+
+      .theme-toggle {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1000;
+        background: var(--gradient);
+        border: none;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        color: var(--black);
+        box-shadow: var(--shadow);
+        transition: var(--transition);
+      }
+
+      .theme-toggle:hover {
+        transform: scale(1.1) rotate(15deg);
+        box-shadow: 0 5px 20px rgba(244, 195, 0, 0.4);
+      }
+
+      .theme-toggle .fa-sun {
+        display: none;
+      }
+
+      [data-theme="dark"] .theme-toggle .fa-moon {
+        display: none;
+      }
+
+      [data-theme="dark"] .theme-toggle .fa-sun {
+        display: block;
+      }
+
+      .cover-container {
+        position: relative;
+        width: 100%;
+        height: 180px;
+        overflow: hidden;
+        border-radius: 24px 24px 0 0;
+      }
+
+      .cover-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: brightness(0.9);
+        transition:
+          transform 0.8s ease,
+          filter 0.5s ease;
+      }
+
+      .cover-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--cover-overlay);
+        backdrop-filter: blur(2px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+      }
+
+      .cover-container:hover .cover-overlay {
+        opacity: 1;
+      }
+
+      .cover-container:hover .cover-image {
+        transform: scale(1.05);
+        filter: brightness(0.8);
+      }
+
+      .cover-text {
+        color: white;
+        font-weight: 700;
+        font-size: 18px;
+        text-align: center;
+        padding: 15px 25px;
+        background: rgba(244, 195, 0, 0.85);
+        border-radius: 12px;
+        transform: translateY(20px);
+        transition: transform 0.5s ease;
+      }
+
+      .cover-container:hover .cover-text {
+        transform: translateY(0);
+      }
+
+      .card {
+        width: 100%;
+        max-width: 500px;
+        background: var(--card-bg);
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+        border: 1px solid var(--border-color);
+        position: relative;
+        transition: var(--transition);
+      }
+
+      .card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 30px 60px rgba(244, 195, 0, 0.15);
+      }
+
+      .card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 6px;
+        background: var(--gradient);
+        z-index: 10;
+      }
+
+      .header {
+        padding: 40px 30px 25px;
+        text-align: center;
+        background: linear-gradient(
+          to bottom,
+          var(--section-bg),
+          var(--card-bg)
+        );
+        position: relative;
+        margin-top: -40px;
+        z-index: 2;
+      }
+
+      .logo {
+        width: 100%;
+        height: 100%;
+        background: transparent !important;
+        box-shadow: none !important;
+
+        object-fit: contain;
+        filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.1));
+        transition: var(--transition);
+      }
+      .logo-container {
+        width: 160px;
+        height: 160px;
+        margin: 0 auto 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: var(--transition);
+        position: relative;
+        z-index: 3;
+
+        overflow: hidden;
+      }
+      [data-theme="light"] .logo-container {
+        background: transparent;
+        border: none;
+        box-shadow: none;
+      }
+
+      [data-theme="dark"] .logo {
+        filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3)) brightness(1.1);
+      }
+
+      .logo:hover {
+        transform: scale(1.05);
+        filter: drop-shadow();
+      }
+
+      [data-theme="dark"] .logo:hover {
+        filter: drop-shadow();
+      }
+
+      .name {
+        font-size: 36px;
+        font-weight: 800;
+        color: var(--text-color);
+        margin-bottom: 8px;
+        letter-spacing: -0.5px;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .tagline {
+        color: var(--primary);
+        font-weight: 700;
+        font-size: 17px;
+        margin-bottom: 20px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        position: relative;
+        display: inline-block;
+        padding-bottom: 8px;
+      }
+
+      .tagline::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 25%;
+        width: 50%;
+        height: 2px;
+        background: var(--gradient);
+        border-radius: 2px;
+      }
+
+      .badges {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 20px;
+      }
+
+      .badge {
+        background: var(--gradient);
+        color: var(--black);
+        padding: 8px 16px;
+        border-radius: 50px;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        box-shadow: 0 4px 12px rgba(244, 195, 0, 0.2);
+        transition: var(--transition);
+      }
+
+      .badge:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(244, 195, 0, 0.3);
+      }
+
+      .content {
+        padding: 30px;
+      }
+
+      .bio {
+        color: var(--gray);
+        font-size: 15.5px;
+        text-align: center;
+        margin-bottom: 35px;
+        line-height: 1.8;
+        padding: 0 10px;
+      }
+
+      .section-title {
+        font-size: 18px;
+        font-weight: 800;
+        color: var(--text-color);
+        margin-bottom: 22px;
+        position: relative;
+        padding-left: 18px;
+      }
+
+      .section-title::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 6px;
+        height: 24px;
+        background: var(--primary);
+        border-radius: 3px;
+      }
+
+      .links {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+        margin-bottom: 35px;
+      }
+
+      .link-item {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        padding: 20px;
+        background: var(--card-bg);
+        border: 2px solid var(--border-color);
+        border-radius: 16px;
+        color: var(--text-color);
+        transition: var(--transition);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .link-item:hover {
+        border-color: var(--primary);
+        background: linear-gradient(
+          to right,
+          rgba(244, 195, 0, 0.1),
+          transparent
+        );
+        transform: translateX(8px);
+      }
+
+      [data-theme="dark"] .link-item:hover {
+        background: linear-gradient(
+          to right,
+          rgba(255, 215, 0, 0.15),
+          transparent
+        );
+      }
+
+      .link-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 12px;
+        background: var(--gradient);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 18px;
+        color: var(--black);
+        font-size: 22px;
+        flex-shrink: 0;
+        box-shadow: 0 4px 10px rgba(244, 195, 0, 0.25);
+      }
+
+      .link-text {
+        flex-grow: 1;
+      }
+
+      .link-title {
+        font-weight: 700;
+        font-size: 17px;
+        margin-bottom: 5px;
+      }
+
+      .link-subtitle {
+        font-size: 13.5px;
+        color: var(--gray);
+      }
+
+      .social-section {
+        margin-top: 45px;
+      }
+
+      .socials {
+        display: flex;
+        justify-content: center;
+        gap: 18px;
+      }
+
+      .social-link {
+        width: 55px;
+        height: 55px;
+        border-radius: 50%;
+        background: var(--card-bg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        color: var(--text-color);
+        border: 2px solid var(--border-color);
+        font-size: 24px;
+        transition: var(--transition);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .social-link:hover {
+        background: var(--primary);
+        border-color: var(--primary);
+        color: var(--black);
+        transform: translateY(-5px) scale(1.1);
+        box-shadow: 0 12px 25px rgba(244, 195, 0, 0.3);
+      }
+
+      .social-link img {
+        width: 28px;
+        height: 28px;
+        object-fit: contain;
+        filter: brightness(0.9);
+        transition: filter 0.3s ease;
+      }
+
+      [data-theme="dark"] .social-link img {
+        filter: brightness(1.2);
+      }
+
+      .social-link:hover img {
+        filter: brightness(1) !important;
+      }
+
+      .footer {
+        margin-top: 45px;
+        padding-top: 25px;
+        border-top: 1px solid var(--footer-border);
+        text-align: center;
+        color: var(--gray);
+        font-size: 13.5px;
+      }
+
+      .copyright {
+        font-weight: 600;
+        margin-bottom: 8px;
+      }
+
+      .location {
+        font-size: 13px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+      }
+
+      @media (max-width: 480px) {
+        .card {
+          max-width: 100%;
+          border-radius: 20px;
+        }
+
+        .cover-container {
+          height: 150px;
+          border-radius: 20px 20px 0 0;
+        }
+
+        .cover-text {
+          font-size: 16px;
+          padding: 12px 20px;
+        }
+
+        .header {
+          padding: 35px 20px 20px;
+          margin-top: -35px;
+        }
+
+        .logo-container {
+          width: 140px;
+          height: 140px;
+          border-width: 4px;
+        }
+
+        .name {
+          font-size: 30px;
+        }
+
+        .content {
+          padding: 25px 20px;
+        }
+
+        .link-item {
+          padding: 18px;
+        }
+
+        .link-icon {
+          width: 45px;
+          height: 45px;
+          font-size: 20px;
+        }
+
+        .theme-toggle {
+          top: 15px;
+          right: 15px;
+          width: 45px;
+          height: 45px;
+          font-size: 18px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+      <i class="fas fa-moon"></i>
+      <i class="fas fa-sun"></i>
+    </button>
+
+    <div class="card">
+      <!-- Cover Image Section -->
+      <div class="cover-container">
+        <img class="cover-image" src="images/7.jpg" alt="EVOLT Cover Image" />
+        <div class="cover-overlay">
+          <div class="cover-text">Innovation & Sécurité Numérique</div>
+        </div>
+      </div>
+
+      <div class="header">
+        <div class="logo-container">
+          <img
+            class="logo light-logo"
+            src="images/1.png"
+            alt="Logo SARL EVOLT Light"
+          />
+          <img
+            class="logo dark-logo"
+            src="images/5.png"
+            alt="Logo SARL EVOLT Dark"
+            style="display: none"
+          />
+        </div>
+        <h1 class="name">SARL EVOLT</h1>
+        <div class="tagline">Votre espace, votre sécurité, notre priorité.</div>
+        <div class="badges">
+          <span class="badge">Vidéosurveillance</span>
+          <span class="badge">AJAX Système</span>
+          <span class="badge">Geolocalisation</span>
+          <span class="badge">radio communication</span>
+          <span class="badge">smart home</span>
+          <span class="badge">instalation réseau</span>
+        </div>
+      </div>
+
+      <div class="content">
+        <p class="bio">
+          Nous transformons vos idées en solutions numériques performantes.
+          Spécialistes en développement sur mesure, création d'identités
+          visuelles et expériences utilisateur innovantes.
+        </p>
+
+        <div class="section-title">Nos Services</div>
+        <div class="links">
+          <a class="link-item" href="https://www.evolt-dz.com/" target="_blank">
+            <div class="link-icon">
+              <i class="fas fa-globe"></i>
+            </div>
+            <div class="link-text">
+              <div class="link-title">Portfolio & Services</div>
+              <div class="link-subtitle">
+                Découvrez tous nos projets et solutions
+              </div>
+            </div>
+            <i
+              class="fas fa-chevron-right"
+              style="color: var(--primary); font-size: 14px"
+            ></i>
+          </a>
+
+          <a
+            class="link-item"
+            href="mailto:contact@evolt-dz.com?subject=Demande%20d'information&body=Bonjour%20SARL%20EVOLT,"
+          >
+            <div class="link-icon">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <div class="link-text">
+              <div class="link-title">Contact Commercial</div>
+              <div class="link-subtitle">Demande de devis & informations</div>
+            </div>
+            <i
+              class="fas fa-chevron-right"
+              style="color: var(--primary); font-size: 14px"
+            ></i>
+          </a>
+
+          <a
+            class="link-item"
+            href="https://wa.me/213550199655?text=Bonjour%20je%20veux%20plus%20d'informations"
+            target="_blank"
+          >
+            <div class="link-icon">
+              <i class="fab fa-whatsapp"></i>
+            </div>
+            <div class="link-text">
+              <div class="link-title">Support WhatsApp</div>
+              <div class="link-subtitle">
+                Réponse rapide & conseils personnalisés
+              </div>
+            </div>
+            <i
+              class="fas fa-chevron-right"
+              style="color: var(--primary); font-size: 14px"
+            ></i>
+          </a>
+        </div>
+
+        <div class="social-section">
+          <div class="section-title">Réseaux Sociaux</div>
+          <div class="socials">
+            <a
+              class="social-link"
+              href="https://www.facebook.com/SARLEVOLT/"
+              aria-label="Facebook"
+              target="_blank"
+            >
+              <img class="light-icon" src="images/2.png" alt="Facebook Light" />
+              <img
+                class="dark-icon"
+                src="images/2.png"
+                alt="Facebook Dark"
+                style="display: none"
+              />
+            </a>
+            <a
+              class="social-link"
+              href="https://www.instagram.com/sarl_evolt/"
+              aria-label="Instagram"
+              target="_blank"
+            >
+              <img
+                class="light-icon"
+                src="images/3.png"
+                alt="Instagram Light"
+              />
+              <img
+                class="dark-icon"
+                src="images/3.png"
+                alt="Instagram Dark"
+                style="display: none"
+              />
+            </a>
+            <a class="social-link" href="#" aria-label="TikTok">
+              <img class="light-icon" src="images/4.png" alt="TikTok Light" />
+              <img
+                class="dark-icon"
+                src="images/4.png"
+                alt="TikTok Dark"
+                style="display: none"
+              />
+            </a>
+          </div>
+        </div>
+
+        <div class="footer">
+          <div class="copyright">© 2026 SARL EVOLT. Tous droits réservés.</div>
+          <div class="location">
+            <i class="fas fa-map-marker-alt" style="color: var(--primary)"></i>
+            Alger, Algérie
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const themeToggle = document.getElementById("themeToggle");
+      const htmlElement = document.documentElement;
+      const savedTheme = localStorage.getItem("theme") || "light";
+      htmlElement.setAttribute("data-theme", savedTheme);
+      updateToggleIcon();
+      updateLogos(savedTheme);
+
+      function updateToggleIcon() {
+        const currentTheme = htmlElement.getAttribute("data-theme");
+        if (currentTheme === "dark") {
+          themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+          themeToggle.setAttribute("aria-label", "Switch to light mode");
+        } else {
+          themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+          themeToggle.setAttribute("aria-label", "Switch to dark mode");
+        }
+      }
+
+      function updateLogos(theme) {
+        const lightLogo = document.querySelector(".light-logo");
+        const darkLogo = document.querySelector(".dark-logo");
+        if (theme === "dark") {
+          if (lightLogo) lightLogo.style.display = "none";
+          if (darkLogo) darkLogo.style.display = "block";
+        } else {
+          if (lightLogo) lightLogo.style.display = "block";
+          if (darkLogo) darkLogo.style.display = "none";
+        }
+
+        document.querySelectorAll(".light-icon").forEach((icon) => {
+          icon.style.display = theme === "dark" ? "none" : "block";
+        });
+
+        document.querySelectorAll(".dark-icon").forEach((icon) => {
+          icon.style.display = theme === "dark" ? "block" : "none";
+        });
+      }
+
+      themeToggle.addEventListener("click", () => {
+        const currentTheme = htmlElement.getAttribute("data-theme");
+        const newTheme = currentTheme === "dark" ? "light" : "dark";
+        htmlElement.setAttribute("data-theme", newTheme);
+        localStorage.setItem("theme", newTheme);
+        updateToggleIcon();
+        updateLogos(newTheme);
+        document.body.style.transition =
+          "background-color 0.5s ease, color 0.5s ease";
+        setTimeout(() => {
+          document.body.style.transition = "";
+        }, 500);
+      });
+
+      document.querySelectorAll(".link-item").forEach((item) => {
+        item.addEventListener("mouseenter", function () {
+          this.style.boxShadow = "0 8px 25px rgba(244, 195, 0, 0.2)";
+        });
+        item.addEventListener("mouseleave", function () {
+          this.style.boxShadow = "none";
+        });
+      });
+
+      document.addEventListener("DOMContentLoaded", function () {
+        document.body.style.opacity = "0";
+        document.body.style.transition = "opacity 0.5s ease";
+        setTimeout(() => {
+          document.body.style.opacity = "1";
+        }, 100);
+        updateLogos(savedTheme);
+
+        // Cover image animation
+        const coverImage = document.querySelector(".cover-image");
+        if (coverImage) {
+          // Add a subtle parallax effect on scroll
+          window.addEventListener("scroll", () => {
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * -0.5;
+            coverImage.style.transform = `translateY(${rate}px) scale(1.05)`;
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
