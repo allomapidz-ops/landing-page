@@ -17,26 +17,6 @@
     />
     <style>
       :root {
-        --primary: #f4c300;
-        --primary-dark: #d4a900;
-        --black: #111111;
-        --dark-gray: #222222;
-        --gray: #666666;
-        --light-gray: #f0f0f0;
-        --light: #ffffff;
-        --gradient: linear-gradient(135deg, #f4c300 0%, #ffdd00 100%);
-        --shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-        --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-        --bg-color: #ffffff;
-        --card-bg: var(--light);
-        --text-color: var(--black);
-        --section-bg: #fafafa;
-        --border-color: var(--light-gray);
-        --footer-border: var(--light-gray);
-        --cover-overlay: rgba(0, 0, 0, 0.3);
-      }
-
-      [data-theme="dark"] {
         --primary: #ffd700;
         --primary-dark: #ffc400;
         --bg-color: #121212;
@@ -45,10 +25,14 @@
         --section-bg: #252525;
         --border-color: #333333;
         --footer-border: #333333;
+        --black: #111111;
+        --dark-gray: #222222;
         --gray: #aaaaaa;
         --light-gray: #333333;
+        --light: #ffffff;
         --gradient: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
         --shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         --cover-overlay: rgba(0, 0, 0, 0.5);
       }
 
@@ -75,43 +59,6 @@
         line-height: 1.6;
         background-color: var(--bg-color);
         background-image: none;
-      }
-
-      .theme-toggle {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        z-index: 1000;
-        background: var(--gradient);
-        border: none;
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 20px;
-        color: var(--black);
-        box-shadow: var(--shadow);
-        transition: var(--transition);
-      }
-
-      .theme-toggle:hover {
-        transform: scale(1.1) rotate(15deg);
-        box-shadow: 0 5px 20px rgba(244, 195, 0, 0.4);
-      }
-
-      .theme-toggle .fa-sun {
-        display: none;
-      }
-
-      [data-theme="dark"] .theme-toggle .fa-moon {
-        display: none;
-      }
-
-      [data-theme="dark"] .theme-toggle .fa-sun {
-        display: block;
       }
 
       .cover-container {
@@ -162,7 +109,7 @@
         font-size: 18px;
         text-align: center;
         padding: 15px 25px;
-        background: rgba(244, 195, 0, 0.85);
+        background: rgba(255, 215, 0, 0.85);
         border-radius: 12px;
         transform: translateY(20px);
         transition: transform 0.5s ease;
@@ -186,7 +133,7 @@
 
       .card:hover {
         transform: translateY(-10px);
-        box-shadow: 0 30px 60px rgba(244, 195, 0, 0.15);
+        box-shadow: 0 30px 60px rgba(255, 215, 0, 0.2);
       }
 
       .card::before {
@@ -213,16 +160,6 @@
         z-index: 2;
       }
 
-      .logo {
-        width: 100%;
-        height: 100%;
-        background: transparent !important;
-        box-shadow: none !important;
-
-        object-fit: contain;
-        filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.1));
-        transition: var(--transition);
-      }
       .logo-container {
         width: 160px;
         height: 160px;
@@ -232,27 +169,25 @@
         justify-content: center;
         transition: var(--transition);
         position: relative;
-        z-index: 3;
-
         overflow: hidden;
-      }
-      [data-theme="light"] .logo-container {
         background: transparent;
         border: none;
         box-shadow: none;
       }
 
-      [data-theme="dark"] .logo {
+      .logo {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
         filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3)) brightness(1.1);
+        transition: var(--transition);
+        background: transparent !important;
+        box-shadow: none !important;
       }
 
       .logo:hover {
         transform: scale(1.05);
-        filter: drop-shadow();
-      }
-
-      [data-theme="dark"] .logo:hover {
-        filter: drop-shadow();
+        filter: drop-shadow(0 8px 20px rgba(255, 215, 0, 0.4)) brightness(1.2);
       }
 
       .name {
@@ -303,13 +238,13 @@
         font-size: 12px;
         font-weight: 700;
         letter-spacing: 0.5px;
-        box-shadow: 0 4px 12px rgba(244, 195, 0, 0.2);
+        box-shadow: 0 4px 12px rgba(255, 215, 0, 0.2);
         transition: var(--transition);
       }
 
       .badge:hover {
         transform: translateY(-2px);
-        box-shadow: 0 6px 15px rgba(244, 195, 0, 0.3);
+        box-shadow: 0 6px 15px rgba(255, 215, 0, 0.3);
       }
 
       .content {
@@ -371,18 +306,10 @@
         border-color: var(--primary);
         background: linear-gradient(
           to right,
-          rgba(244, 195, 0, 0.1),
-          transparent
-        );
-        transform: translateX(8px);
-      }
-
-      [data-theme="dark"] .link-item:hover {
-        background: linear-gradient(
-          to right,
           rgba(255, 215, 0, 0.15),
           transparent
         );
+        transform: translateX(8px);
       }
 
       .link-icon {
@@ -397,7 +324,7 @@
         color: var(--black);
         font-size: 22px;
         flex-shrink: 0;
-        box-shadow: 0 4px 10px rgba(244, 195, 0, 0.25);
+        box-shadow: 0 4px 10px rgba(255, 215, 0, 0.25);
       }
 
       .link-text {
@@ -447,19 +374,15 @@
         border-color: var(--primary);
         color: var(--black);
         transform: translateY(-5px) scale(1.1);
-        box-shadow: 0 12px 25px rgba(244, 195, 0, 0.3);
+        box-shadow: 0 12px 25px rgba(255, 215, 0, 0.3);
       }
 
       .social-link img {
         width: 28px;
         height: 28px;
         object-fit: contain;
-        filter: brightness(0.9);
-        transition: filter 0.3s ease;
-      }
-
-      [data-theme="dark"] .social-link img {
         filter: brightness(1.2);
+        transition: filter 0.3s ease;
       }
 
       .social-link:hover img {
@@ -512,7 +435,6 @@
         .logo-container {
           width: 140px;
           height: 140px;
-          border-width: 4px;
         }
 
         .name {
@@ -532,23 +454,10 @@
           height: 45px;
           font-size: 20px;
         }
-
-        .theme-toggle {
-          top: 15px;
-          right: 15px;
-          width: 45px;
-          height: 45px;
-          font-size: 18px;
-        }
       }
     </style>
   </head>
   <body>
-    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
-      <i class="fas fa-moon"></i>
-      <i class="fas fa-sun"></i>
-    </button>
-
     <div class="card">
       <!-- Cover Image Section -->
       <div class="cover-container">
@@ -561,15 +470,9 @@
       <div class="header">
         <div class="logo-container">
           <img
-            class="logo light-logo"
-            src="images/1.png"
-            alt="Logo SARL EVOLT Light"
-          />
-          <img
-            class="logo dark-logo"
+            class="logo"
             src="images/5.png"
-            alt="Logo SARL EVOLT Dark"
-            style="display: none"
+            alt="Logo SARL EVOLT"
           />
         </div>
         <h1 class="name">SARL EVOLT</h1>
@@ -656,13 +559,7 @@
               aria-label="Facebook"
               target="_blank"
             >
-              <img class="light-icon" src="images/2.png" alt="Facebook Light" />
-              <img
-                class="dark-icon"
-                src="images/2.png"
-                alt="Facebook Dark"
-                style="display: none"
-              />
+              <img src="images/2.png" alt="Facebook" />
             </a>
             <a
               class="social-link"
@@ -670,26 +567,10 @@
               aria-label="Instagram"
               target="_blank"
             >
-              <img
-                class="light-icon"
-                src="images/3.png"
-                alt="Instagram Light"
-              />
-              <img
-                class="dark-icon"
-                src="images/3.png"
-                alt="Instagram Dark"
-                style="display: none"
-              />
+              <img src="images/3.png" alt="Instagram" />
             </a>
             <a class="social-link" href="#" aria-label="TikTok">
-              <img class="light-icon" src="images/4.png" alt="TikTok Light" />
-              <img
-                class="dark-icon"
-                src="images/4.png"
-                alt="TikTok Dark"
-                style="display: none"
-              />
+              <img src="images/4.png" alt="TikTok" />
             </a>
           </div>
         </div>
@@ -705,79 +586,24 @@
     </div>
 
     <script>
-      const themeToggle = document.getElementById("themeToggle");
-      const htmlElement = document.documentElement;
-      const savedTheme = localStorage.getItem("theme") || "light";
-      htmlElement.setAttribute("data-theme", savedTheme);
-      updateToggleIcon();
-      updateLogos(savedTheme);
-
-      function updateToggleIcon() {
-        const currentTheme = htmlElement.getAttribute("data-theme");
-        if (currentTheme === "dark") {
-          themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-          themeToggle.setAttribute("aria-label", "Switch to light mode");
-        } else {
-          themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-          themeToggle.setAttribute("aria-label", "Switch to dark mode");
-        }
-      }
-
-      function updateLogos(theme) {
-        const lightLogo = document.querySelector(".light-logo");
-        const darkLogo = document.querySelector(".dark-logo");
-        if (theme === "dark") {
-          if (lightLogo) lightLogo.style.display = "none";
-          if (darkLogo) darkLogo.style.display = "block";
-        } else {
-          if (lightLogo) lightLogo.style.display = "block";
-          if (darkLogo) darkLogo.style.display = "none";
-        }
-
-        document.querySelectorAll(".light-icon").forEach((icon) => {
-          icon.style.display = theme === "dark" ? "none" : "block";
-        });
-
-        document.querySelectorAll(".dark-icon").forEach((icon) => {
-          icon.style.display = theme === "dark" ? "block" : "none";
-        });
-      }
-
-      themeToggle.addEventListener("click", () => {
-        const currentTheme = htmlElement.getAttribute("data-theme");
-        const newTheme = currentTheme === "dark" ? "light" : "dark";
-        htmlElement.setAttribute("data-theme", newTheme);
-        localStorage.setItem("theme", newTheme);
-        updateToggleIcon();
-        updateLogos(newTheme);
-        document.body.style.transition =
-          "background-color 0.5s ease, color 0.5s ease";
-        setTimeout(() => {
-          document.body.style.transition = "";
-        }, 500);
-      });
-
-      document.querySelectorAll(".link-item").forEach((item) => {
-        item.addEventListener("mouseenter", function () {
-          this.style.boxShadow = "0 8px 25px rgba(244, 195, 0, 0.2)";
-        });
-        item.addEventListener("mouseleave", function () {
-          this.style.boxShadow = "none";
-        });
-      });
-
       document.addEventListener("DOMContentLoaded", function () {
         document.body.style.opacity = "0";
         document.body.style.transition = "opacity 0.5s ease";
         setTimeout(() => {
           document.body.style.opacity = "1";
         }, 100);
-        updateLogos(savedTheme);
 
-        // Cover image animation
+        document.querySelectorAll(".link-item").forEach((item) => {
+          item.addEventListener("mouseenter", function () {
+            this.style.boxShadow = "0 8px 25px rgba(255, 215, 0, 0.2)";
+          });
+          item.addEventListener("mouseleave", function () {
+            this.style.boxShadow = "none";
+          });
+        });
+
         const coverImage = document.querySelector(".cover-image");
         if (coverImage) {
-          // Add a subtle parallax effect on scroll
           window.addEventListener("scroll", () => {
             const scrolled = window.pageYOffset;
             const rate = scrolled * -0.5;
